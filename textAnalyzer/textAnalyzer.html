@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="./TextAnalyzer.css">
+</head>
+<body>
+  <!-- ⊗jsPrStTA -->
+  <h1>Анализатор текста на JavaScript</h1>
+  <ol>
+    <li>Дан textarea. Пусть в него вводится текст. Сделайте так, чтобы по потери фокуса под текстареа вывелось сообщение о том, сколько в этом тексте слов.</li>
+    <li>Модифицируйте предыдущую задачу так, чтобы также вывелось сообщение о том, сколько в тексте символов.</li>
+    <li>Модифицируйте предыдущую задачу так, чтобы также вывелось сообщение о том, сколько в тексте символов за вычетом пробелов.</li>
+    <li>Модифицируйте предыдущую задачу так, чтобы также вывелось сообщение о процентном содержании каждого символа в тексте.</li>
+    <li>В предыдущих задачах мы сделали так, что для нашего текста выводятся 4 параметра. Сделайте 4 чекбокса, которые будут регулировать, какие именно параметры показывать.</li>
+  </ol>
+  <hr>
+
+  <input type="text" class="text"><br>
+  <p>Какие параметры показывать: </p><br>
+  <input type="checkbox" class="checkbox1">
+  <p>В этом тексте слов: <span class="word"></span></p><br>
+  <input type="checkbox" class="checkbox2">
+  <p>В этом тексте символов: <span class="symbol1"></span></p><br>
+  <input type="checkbox" class="checkbox3">
+  <p>В этом тексте символов без пробелов: <span class="symbol2"></span></p><br>
+  <input type="checkbox" class="checkbox4">
+  <p>Процент:<span class="procent"></span></p>
+
+  <script>
+    let input = document.querySelector('input');
+    let word = document.querySelector('.word');
+    let symbol1 = document.querySelector('.symbol1');
+    let symbol2 = document.querySelector('.symbol2');
+    let procent = document.querySelector('.procent');
+    let checkbox1 = document.querySelector('.checkbox1');
+    let checkbox2 = document.querySelector('.checkbox2');  
+    let checkbox3 = document.querySelector('.checkbox3');
+    let checkbox4 = document.querySelector('.checkbox4');
+    
+    input.addEventListener('blur', function(){
+      //показывает сколько слов в тексте
+      if(checkbox1.checked) {
+        word.textContent = input.value.split(' ').length;
+      } else {
+        word.textContent = '';
+      }
+
+      //показывает сколько символов в тексте с пробелами
+      if(checkbox2.checked) {
+        symbol1.textContent = input.value.length;
+      } else {
+        symbol1.textContent = '';
+      }
+      
+      //показывает сколько символов в тексте без пробелов
+      if(checkbox3.checked) {
+        symbol2.textContent = input.value.split(' ').join('').length;
+      } else {
+        symbol2.textContent = '';
+      }
+
+      // Выводится сообщение о процентном содержании каждого символа в тексте
+      if(checkbox4.checked) {
+        
+        let symbols = 'abcdefghijklmnopqrstuvwxyz';
+        let inputArr = input.value.split('');
+        let obj = {};
+
+
+        for(let symbol of symbols) {
+          inputArr.forEach(s => obj[s] = inputArr.filter(symbol => symbol == s).length)
+        }
+        
+        procent.innerText = '';
+        for(let elem in obj){
+          if(elem == ' ') {
+            let result = ` \n В этом тексте ${Math.trunc(100 / (input.value.split(' ').join('').length / obj[elem]))}% пробелов`;
+            procent.innerText += result
+          } else {
+            let result = ` \n В этом тексте ${Math.trunc(100 / (input.value.split(' ').join('').length / obj[elem]))}% символа ${elem}`;
+            procent.innerText += result
+          }
+          
+        }
+        } else {
+          procent.textContent = '';
+        }
+      })
+  </script>
+</body>
+</html>
