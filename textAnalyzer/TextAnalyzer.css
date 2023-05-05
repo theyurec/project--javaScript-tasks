@@ -1,7 +1,13 @@
+
+div {
+  font-size: 22px;
+}
+
 h1{
   text-align: center;
 }
-.text {
+
+.textarea {
     width:30%;
     border:2px solid #aaa;
     border-radius:4px;
