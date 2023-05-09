@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/gameNumber/gameNumber.css">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+
+  
+  <title>Игра "Угадай число"</title>
+</head>
+<body>
+
+  <div class="container text-center">
+    <h1>Игра "Угадай число"</h1>
+    <div class="main">
+      <input type="number" class="field" placeholder="Введите число от 1 до 100">
+      <input type="submit" class="submit" value="Проверить">
+      <input type="submit" class="update" value="Обновить">
+    </div>
+    <input type="submit" class="start" value="Начать">
+    <p class="answer"></p>
+  </div>
+
+  <script>
+    let main = document.querySelector('.main');
+    let start = document.querySelector('.start');
+    let field = document.querySelector('.field');
+    let submit = document.querySelector('.submit');
+    let update = document.querySelector('.update');
+    let answer = document.querySelector('.answer');
+    let random = Math.floor(1 + Math.random() * (100 + 1 - 1));
+
+    start.addEventListener('click', () => {
+      main.classList.add('block');
+      start.classList.add('none');
+    })
+    
+    function randomNumber() {
+      random = Math.floor(1 + Math.random() * (100 + 1 - 1));
+    }
+
+    submit.addEventListener('click', () => {
+      if (field.value === "") {
+        answer.textContent = "Введите число";
+      } else if(random < field.value) {
+        answer.textContent = "Число меньше";
+      } else if(random > field.value) {
+        answer.textContent = "Число больше";
+      } else {
+        answer.textContent = 'Вы угадали!';
+      }
+    })
+
+    update.addEventListener('click', () => {
+      randomNumber();
+      answer.textContent = '';
+      field.value = '';
+    })
+    
+  </script>
+</body>
+</html>
